@@ -6,6 +6,7 @@ import {BalanceDelta} from "@pancakeswap/v4-core/src/types/BalanceDelta.sol";
 import {PoolId, PoolIdLibrary} from "@pancakeswap/v4-core/src/types/PoolId.sol";
 import {IBinPoolManager} from "@pancakeswap/v4-core/src/pool-bin/interfaces/IBinPoolManager.sol";
 import {BinBaseHook} from "./BinBaseHook.sol";
+import {console2} from "forge-std/console2.sol";
 
 /// @notice BinCounterHook is a contract that counts the number of times a hook is called
 /// @dev note the code is not production ready, it is only to share how a hook looks like
@@ -47,12 +48,15 @@ contract BinCounterHook is BinBaseHook {
         return this.beforeMint.selector;
     }
 
-    function afterMint(address, PoolKey calldata key, IBinPoolManager.MintParams calldata, BalanceDelta, bytes calldata)
+    function afterMint(address, PoolKey calldata key, IBinPoolManager.MintParams calldata params, BalanceDelta, bytes calldata)
         external
         override
         poolManagerOnly
         returns (bytes4)
     {
+        for(uint256 i = 0; i < params.liquidityConfigs.length; i++){
+            console2.logBytes32(params.liquidityConfigs[i]);
+        }
         afterMintCount[key.toId()]++;
         return this.afterMint.selector;
     }

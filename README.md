@@ -9,7 +9,9 @@
 ## Running test
 
 1. Install dependencies with `forge install`
-2. Run test with `forge test`
+2. Run test with `forge test -vvvv --rpc-url https://inevm-rpc.caldera.dev`
+
+or `forge test -vvvv --rpc-url https://evm-rpc-arctic-1.sei-apis.com` for SEI v2 Devnet
 
 ## Description
 
